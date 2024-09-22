@@ -33,8 +33,8 @@ class UpdateUserInfo extends Command
         User::all()->each(function ($user) use ($timezones) {
 
             $user->update([
-                'firstname' => Str::random(6),
-                'lastname' => Str::random(8),
+                'firstname' => fake()->firstName(),
+                'lastname' => fake()->lastName(),
                 'timezone' => $timezones[array_rand($timezones)]
             ]);
         });
