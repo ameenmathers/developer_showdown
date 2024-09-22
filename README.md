@@ -1,57 +1,86 @@
 <<<<<<< HEAD
 # developer_showdown
-Mid Level Laravel Developer Test
+Mid Level Laravel Developer Test for Jibrin Idris
 =======
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# User Batch Processing System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project implements a system for processing user attributes and sending them to a third-party API in batches. The system listens for changes in user attributes such as `firstname`, `lastname`, and `timezone`, stores the updated users temporarily, and sends their data to the API in batches, respecting the API's rate limits.
 
-## About Laravel
+## Features
+- **Batch Processing**: Processes up to 1,000 users per batch, sending them to a third-party API.
+- **API Rate Limiting**: Ensures that no more than 50 requests are made per hour to comply with the third-party API rate limit.
+- **Event-Driven Updates**: Listens for changes in user attributes and only processes users whose data has changed.
+- **Unit Testing**: Includes unit tests that mock API calls using Laravel's HTTP faking capabilities.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prerequisites
+- **PHP 8.0+**
+- **Composer**
+- **Laravel 9+**
+- **Database** (MySQL, SQLite, etc.)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/your-repository.git
+    cd your-repository
+    ```
 
-## Learning Laravel
+2. Install dependencies:
+    ```bash
+    composer install
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. Copy the `.env.example` file to `.env`:
+    ```bash
+    cp .env.example .env
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. Generate an application key:
+    ```bash
+    php artisan key:generate
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5. Set up your database connection in the `.env` file.
 
-## Laravel Sponsors
+6. Run migrations:
+    ```bash
+    php artisan migrate
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+7. (Optional) Seed the database with test users:
+    ```bash
+    php artisan db:seed
+    ```
 
-### Premium Partners
+## Usage
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 1. Run the Laravel development server:
+   ```bash
+   php artisan serve
+ ```
+
+### 2. Process user updates via artisan command:
+   ```bash
+   php artisan users:process-batch
+ ```
+
+### 3. Running Tests:
+   ```bash
+  php artisan test
+ ```
+
+
+###  Project Structure
+Events: Listens for user attribute changes.
+Commands: Handles batch processing of user updates.
+HTTP Client: Uses Laravel's Http facade to send requests to the third-party API.
+Unit Tests: Includes tests to verify that user batches are processed and sent correctly.
+
+## Configuration
+
+API Endpoint: Update the third-party API endpoint in the code or via environment variables if needed.
 
 ## Contributing
 
